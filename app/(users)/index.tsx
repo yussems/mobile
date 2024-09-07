@@ -9,40 +9,36 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import UserBottomSheet from "./components/UserBottomSheet";
 
 export default function Index() {
-  // query for users
-  const [query, setQuery] = useState()
   const userQuery = useQuery({
     queryKey: ['users'],
     queryFn: getAllUsers
   })
 
-
-
   return (
-    <SafeAreaView>
-
-      <Filter />
-      <ScrollView showsVerticalScrollIndicator={false}>
-
-        <View style={{ marginTop: 20 }}>
-          <View style={{ gap: 18 }}>
-            {
-              userQuery.data?.data?.map(
-                (user: UserInfo) => (
-                  <View
-                    key={user.id}
-                  >
-                    <UserCard
-                      {...user}
-                    />
-                  </View>
+    <>
+      <SafeAreaView>
+        <Filter />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{ marginTop: 20 }}>
+            <View style={{ gap: 18 }}>
+              {
+                userQuery?.data?.data?.map(
+                  (user: UserInfo) => (
+                    <View
+                      key={user.id}
+                    >
+                      <UserCard
+                        {...user}
+                      />
+                    </View>
+                  )
                 )
-              )
-            }
+              }
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </>
 
   );
 }

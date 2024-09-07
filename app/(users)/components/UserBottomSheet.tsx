@@ -1,26 +1,16 @@
-import React, { useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
-function UserBottomSheet({ bottomSheetRef, snapPoints }: { bottomSheetRef: any, snapPoints: any }) {
+function UserBottomSheet() {
     return (
         <View style={styles.container}>
-            <BottomSheet
-                ref={bottomSheetRef}
-                snapPoints={snapPoints}
-                enablePanDownToClose
-            >
-                <BottomSheetView style={styles.contentContainer}>
-                    <Text>Awesome 🎉</Text>
-                </BottomSheetView>
-            </BottomSheet>
+            <Text>UserBottom</Text>
         </View>
 
     )
 }
 const styles = StyleSheet.create({
     container: {
-        padding: 24,
+        flex: 1,
         backgroundColor: 'grey',
     },
     contentContainer: {

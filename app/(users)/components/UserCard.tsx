@@ -3,15 +3,17 @@ import { customTheme } from '@/utils/theme';
 import React, { useRef, useState } from 'react'
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Text, IconButton, Icon } from 'react-native-paper';
-import UserBottomSheet from './UserBottomSheet';
 
 
 
 export default function UserCard({ ...props }: UserInfo) {
 
+    const handleOpenSheet = () => {
+        console.log('open sheet')
+    }
+
     return (
         <>
-
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{
@@ -28,7 +30,7 @@ export default function UserCard({ ...props }: UserInfo) {
                         </View>
                     </View>
                     <View >
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleOpenSheet()}>
                             <Icon
                                 source="dots-vertical"
                                 color={customTheme.themes.colors.text.primary}
