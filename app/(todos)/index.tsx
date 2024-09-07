@@ -1,7 +1,9 @@
 import { getAllTodos } from "@/services/todos";
 import Filter from "@/shared/Filter";
 import { useQuery } from "@tanstack/react-query";
-import { Text, View } from "react-native";
+import { FlatList, View } from "react-native";
+import TodosList from "./components/TodosList";
+import { ITodo } from "@/types/Todos";
 
 export default function Index() {
   const todosQuery = useQuery({
@@ -9,15 +11,15 @@ export default function Index() {
     queryFn: getAllTodos
   })
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View>
       <Filter />
-      <Text>Edit app/index.tsx to edit asdthis screen.</Text>
+      <FlatList<ITodo>
+        data={todosQuery?.data?.data}
+        renderItem={({ item }) => <TodosList {...item} />}
+        keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{ height: 13 }} />}
+      />
     </View>
   );
 }
