@@ -10,7 +10,9 @@ export default function RootLayout() {
   return (
     <PaperProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Tabs />
+        <Stack >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
       </QueryClientProvider>
     </PaperProvider>
   );

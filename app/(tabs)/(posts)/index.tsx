@@ -10,6 +10,10 @@ export default function Index() {
     queryKey: ['posts'],
     queryFn: getAllPosts
   })
+
+  console.log(postsQuery.data);
+
+
   return (
     <SafeAreaView>
       <View >
@@ -22,6 +26,8 @@ export default function Index() {
             renderItem={({ item }) => <PostCards {...item} />}
             keyExtractor={item => item.id.toString()}
             ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+            showsVerticalScrollIndicator={false}
+
           />
         </View>
       </View>
