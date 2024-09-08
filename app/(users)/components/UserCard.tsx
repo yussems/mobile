@@ -6,12 +6,7 @@ import { Text, IconButton, Icon } from 'react-native-paper';
 
 
 
-export default function UserCard({ ...props }: UserInfo) {
-
-    const handleOpenSheet = () => {
-        console.log('open sheet')
-    }
-
+export default function UserCard({ handleOpenSheet, ...props }: UserInfo & { handleOpenSheet: (id: string) => void }) {
     return (
         <>
             <View style={styles.container}>
@@ -30,7 +25,7 @@ export default function UserCard({ ...props }: UserInfo) {
                         </View>
                     </View>
                     <View >
-                        <TouchableOpacity onPress={() => handleOpenSheet()}>
+                        <TouchableOpacity onPress={() => handleOpenSheet(props.id)}>
                             <Icon
                                 source="dots-vertical"
                                 color={customTheme.themes.colors.text.primary}

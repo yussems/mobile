@@ -8,7 +8,7 @@ const TodosList = ({ ...props }: ITodo) => {
         <View >
             <View style={styles.row}>
                 <Checkbox
-                    uncheckedColor='red'
+                    uncheckedColor='grey'
                     color='green'
                     status={props.completed ? 'checked' : 'unchecked'}
                     onPress={() => { }}
