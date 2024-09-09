@@ -18,7 +18,7 @@ const TabsLayout = () => {
                 name="(todos)"
                 options={{
                     title: "Görevler",
-                    headerTitle: "Görev",
+                    headerTitle: "Görevler",
                     tabBarIcon: ({ color }) => <MaterialIcons name="task" size={24} color="black" />,
 
                 }} />
@@ -34,7 +34,7 @@ const TabsLayout = () => {
                 name="(favorite)"
                 options={{
                     title: "Favoriler",
-                    headerTitle: "Gönderiler",
+                    headerTitle: "Favoriler",
                     tabBarIcon: ({ color }) => <MaterialIcons name="favorite" size={24} color="black" />,
                 }} />
         </Tabs>

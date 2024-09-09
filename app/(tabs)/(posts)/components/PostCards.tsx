@@ -26,7 +26,7 @@ export default function PostCards({ ...props }: IPost) {
                         <Text>see PostCards</Text>
                         <Link
                             href={{
-                                pathname: '/(tabs)/posts /details/[id]',
+                                pathname: '/(posts)/details/[id]',
                                 params: { id: props.id },
                             }}>
                             <Icon

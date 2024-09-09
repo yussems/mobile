@@ -16,8 +16,6 @@ export default function Index() {
     queryFn: () => getAllPosts(query),
   })
 
-
-
   const posts = postsQuery?.data?.data
   const handleLoadMore = () => {
     setNextPage(nextPage + 1);
