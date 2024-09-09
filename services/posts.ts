@@ -1,7 +1,7 @@
 import { apiClient } from "@/utils/apiClient";
 
-export async function getAllPosts() {
-    const res = await apiClient.get('/posts')
+export async function getAllPosts(query: string) {
+    const res = await apiClient.get(`/posts${query}`)
     return res
 }
 export async function getPost(id: string) {

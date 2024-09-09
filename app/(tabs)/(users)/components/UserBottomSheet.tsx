@@ -1,8 +1,9 @@
 import { getUser } from '@/services/user';
 import { useQuery } from '@tanstack/react-query';
 import { View, StyleSheet, Modal, Alert, Touchable, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Divider, Icon, Text } from 'react-native-paper';
-
+import { Button, Divider, Icon, Text } from 'react-native-paper';
+import favoritesStore from '@/context/store'
+import { observer } from 'mobx-react';
 function UserBottomSheet({ modalVisible, setModalVisible, userId }: { modalVisible: boolean, setModalVisible: any, userId: string }) {
     const userQuery = useQuery({
         queryKey: ['user', userId],
@@ -10,6 +11,13 @@ function UserBottomSheet({ modalVisible, setModalVisible, userId }: { modalVisib
         enabled: !!userId
     })
     const user = userQuery?.data?.data
+
+    const handleFavorite = () => {
+        favoritesStore.setFavorite(user)
+    }
+    const handleRemoveFavorite = () => {
+        favoritesStore.removeFavorite(user)
+    }
 
     return (
         <Modal
@@ -77,6 +85,28 @@ function UserBottomSheet({ modalVisible, setModalVisible, userId }: { modalVisib
                             <Divider />
                         </View>
                     </View>
+                    <View style={{ paddingHorizontal: 12, paddingVertical: 13, }}>
+
+                        {favoritesStore.favorites.some(fav => fav.id === user?.id) ?
+                            <Button
+                                mode='outlined'
+                                icon={'cards-heart'}
+                                onPress={() => handleRemoveFavorite()}
+                            >
+                                Favorilerden Çıkar
+                            </Button>
+                            :
+                            <Button
+                                mode='outlined'
+                                icon={'cards-heart-outline'}
+                                onPress={() => handleFavorite()}
+                            >
+                                Favorilere Ekle
+                            </Button>
+                        }
+
+                    </View>
+
                 </View>
             </View>
         </Modal>
@@ -92,11 +122,11 @@ const styles = StyleSheet.create({
     subContainer: {
         backgroundColor: 'white',
         width: '100%',
-        height: '40%',
+        height: '50%',
         padding: 20,
         borderRadius: 10
     }
 
 });
 
-export default UserBottomSheet
+export default observer(UserBottomSheet); 

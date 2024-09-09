@@ -1,26 +1,52 @@
-import React from "react"
-import { makeAutoObservable } from "mobx"
-import { observer } from "mobx-react"
-
+import { makeAutoObservable, action } from "mobx";
+import { UserInfo } from "@/types/user";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class Favorites {
-    favorites = []
+    favorites: UserInfo[] = [];
+
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
+        this.loadFavorites();
     }
-    setFavorite(item: any) {
-        if (!this.favorites.includes(item)) {
-            this.favorites.push(item);
+
+    async loadFavorites() {
+        try {
+            const jsonValue = await AsyncStorage.getItem("favorites");
+            if (jsonValue != null) {
+                this.favorites = JSON.parse(jsonValue);
+            }
+        } catch (e) {
+            console.log(e, "AsyncStorage load error");
         }
     }
-    removeFavorite(item: any) {
-        this.favorites = this.favorites.filter(fav => fav !== item);
+
+    @action async setFavorite(item: UserInfo) {
+        if (!this.favorites.some(fav => fav.id === item.id)) {
+
+            this.favorites.push(item);
+            await this.saveFavorites();
+        }
     }
-    clearFavorites() {
+
+    @action async removeFavorite(item: UserInfo) {
+        this.favorites = this.favorites.filter(fav => fav.id !== item.id);
+        await this.saveFavorites();
+    }
+
+    @action async clearFavorites() {
         this.favorites = [];
+        await this.saveFavorites();
     }
 
-
+    @action async saveFavorites() {
+        try {
+            const jsonValue = JSON.stringify(this.favorites);
+            await AsyncStorage.setItem("favorites", jsonValue);
+        } catch (e) {
+            console.log(e, "AsyncStorage save error");
+        }
+    }
 }
 
-export default new Favorites()
+export default new Favorites();
