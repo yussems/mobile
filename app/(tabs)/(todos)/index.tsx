@@ -35,18 +35,20 @@ export default function Index() {
       fetchNextPage();
     }
   };
+  console.log(isLoading);
+
   return (
     <SafeAreaView>
       <View>
         <Filter />
         <View
-          style={{ marginVertical: 20, }}
+          style={{ marginVertical: 20 }}
         >
           <FlatList<ITodo>
             data={todos}
             renderItem={({ item }) => <TodosList {...item} />}
             keyExtractor={item => item.id.toString()}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
             onEndReached={handleLoadMore}
             ListFooterComponent={isFetchingNextPage ? <Text>Loading more...</Text> : null}
             ItemSeparatorComponent={() => <View style={{ height: 13 }} />}

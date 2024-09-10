@@ -4,7 +4,8 @@ export async function getAllPosts({ query }: { query: number }) {
     const res = await apiClient.get(`/posts`, {
         params: {
             _page: query,
-            _per_page: 10,
+            _limit: 30,
+
         },
     });
     return res.data;
