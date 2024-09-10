@@ -24,6 +24,8 @@ export default function PostComments() {
                 renderItem={({ item }) => <CommentCard {...item} />}
                 keyExtractor={item => item.id.toString()}
                 ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+                contentContainerStyle={{ paddingBottom: 150 }}
+
             />
         </View>
     )

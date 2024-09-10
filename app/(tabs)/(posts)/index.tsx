@@ -28,7 +28,7 @@ export default function Index() {
     initialPageParam: 1,
   });
 
-  const posts = data?.pages.flatMap((page) => page) || [];
+  const posts = data?.pages?.flatMap((page) => page) || [];
 
   const handleLoadMore = () => {
     if (hasNextPage) {
