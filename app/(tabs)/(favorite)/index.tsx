@@ -23,14 +23,13 @@ const Favorite = observer(() => {
                         >
                             <Button mode='contained' onPress={() => favoritesStore.clearFavorites()}>Clear</Button>
                         </View>
-
-
                         <FlatList<UserInfo>
                             data={favoritesStore.favorites}
                             renderItem={({ item }) => <FavoriteList {...item} />}
                             keyExtractor={item => item.id.toString()}
                             showsVerticalScrollIndicator={false}
                             ItemSeparatorComponent={() => <View style={{ height: 13 }} />}
+                            contentContainerStyle={{ paddingBottom: 150 }}
                         />
                     </>
             }

@@ -1,24 +1,39 @@
 import Filter from "@/shared/Filter";
 import { FlatList, SafeAreaView, Text, View } from "react-native";
 import PostCards from "./components/PostCards";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getAllPosts } from "@/services/posts";
 import { IPost } from "@/types/posts";
 import { useMemo, useState } from "react";
 import Loading from "@/shared/Loading";
 
 export default function Index() {
-  const [nextPage, setNextPage] = useState(1)
-  const query = useMemo(() => `?_page=${String(nextPage)}&_per_page=10`, [nextPage])
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: ({ pageParam = 1 }) => getAllPosts({ query: pageParam }),
 
-  const postsQuery = useQuery({
-    queryKey: ['posts', query],
-    queryFn: () => getAllPosts(query),
-  })
 
-  const posts = postsQuery?.data?.data
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length > 0) {
+        return allPages.length + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
+  });
+
+  const posts = data?.pages.flatMap((page) => page) || [];
+
   const handleLoadMore = () => {
-    setNextPage(nextPage + 1);
+    if (hasNextPage) {
+      fetchNextPage();
+    }
   };
 
   return (
@@ -27,7 +42,7 @@ export default function Index() {
         <Filter />
 
         {
-          postsQuery.isLoading ? <Loading /> :
+          isLoading ? <Loading /> :
             <View
               style={{ marginVertical: 20, }}
             >
@@ -38,7 +53,9 @@ export default function Index() {
                 ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
                 showsVerticalScrollIndicator={false}
                 onEndReached={handleLoadMore}
-                ListFooterComponent={postsQuery.isFetching ? <Text>Loading more...</Text> : null}
+                ListFooterComponent={isFetchingNextPage ? <Text>Loading more...</Text> : null}
+                contentContainerStyle={{ paddingBottom: 150 }}
+
 
               />
             </View>
