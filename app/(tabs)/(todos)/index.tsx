@@ -35,7 +35,6 @@ export default function Index() {
       fetchNextPage();
     }
   };
-  console.log(isLoading);
 
   return (
     <SafeAreaView>
